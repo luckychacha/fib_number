@@ -27,9 +27,10 @@ mod test {
 
     #[test]
     fn fib_should_work() {
-        // assert_eq!(fib(0), 0.try_into().unwrap());
-        // assert_eq!(fib(1), 1.try_into().unwrap());
+        assert_eq!(fib(0), 0.try_into().unwrap());
+        assert_eq!(fib(1), 1.try_into().unwrap());
         assert_eq!(fib(2), 1.try_into().unwrap());
         assert_eq!(fib(3), 2.try_into().unwrap());
+        assert_eq!(fib(4), 3.try_into().unwrap());
     }
 }
