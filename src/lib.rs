@@ -13,12 +13,19 @@ pub fn fib(n: usize) -> BigUint {
 
     let mut dp_0: BigUint = Zero::zero();
     let mut dp_1: BigUint = One::one();
+
     for _ in 2..=n {
         let dp_2 = dp_0 + &dp_1;
         dp_0 = replace(&mut dp_1, dp_2);
     }
 
     dp_1
+
+    // let mut dp: (BigUint, BigUint) = (Zero::zero(), One::one());
+    // for _ in 2..=n {
+    //     dp = (dp.1.clone(), dp.0.clone() + dp.1.clone())
+    // }
+    // dp.1
 }
 
 /*
