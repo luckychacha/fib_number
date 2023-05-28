@@ -21,6 +21,47 @@ pub fn fib(n: usize) -> BigUint {
     dp_1
 }
 
+/*
+| F(n)   |   | 1  1 |   | F(n-1) |
+| F(n-1) | = | 1  0 | * | F(n-2) |
+ */
+pub fn fib_matrix(n: u64) -> BigUint {
+    if n < 2 {
+        return n.into();
+    }
+
+    let mut base_matrix = [[One::one(), One::one()], [One::one(), Zero::zero()]];
+    let mut result_matrix = [[One::one(), Zero::zero()], [Zero::zero(), Zero::zero()]];
+
+    let mut k = n - 1;
+    while k > 0 {
+        if k % 2 == 1 {
+            result_matrix = matrix_multiply(&result_matrix, &base_matrix);
+        }
+
+        base_matrix = matrix_multiply(&base_matrix, &base_matrix);
+        k /= 2;
+    }
+    result_matrix[0][0].clone()
+}
+
+fn matrix_multiply(a: &[[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) -> [[BigUint; 2]; 2] {
+    let mut res: [[BigUint; 2]; 2] = [
+        [0_usize.into(), 0_usize.into()],
+        [0_usize.into(), 0_usize.into()],
+    ];
+
+    for i in 0..2 {
+        for j in 0..2 {
+            for k in 0..2 {
+                res[i][j] += a[i][k].clone() * b[k][j].clone();
+            }
+        }
+    }
+
+    res
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -32,5 +73,14 @@ mod test {
         assert_eq!(fib(2), 1.try_into().unwrap());
         assert_eq!(fib(3), 2.try_into().unwrap());
         assert_eq!(fib(4), 3.try_into().unwrap());
+    }
+
+    #[test]
+    fn fib_matrix_should_work() {
+        assert_eq!(fib_matrix(0), 0.try_into().unwrap());
+        assert_eq!(fib_matrix(1), 1.try_into().unwrap());
+        assert_eq!(fib_matrix(2), 1.try_into().unwrap());
+        assert_eq!(fib_matrix(3), 2.try_into().unwrap());
+        assert_eq!(fib_matrix(4), 3.try_into().unwrap());
     }
 }
