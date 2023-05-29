@@ -6,7 +6,7 @@ use num_traits::{One, Zero};
 // F1 = 1
 // F2 = F0 + F1
 // F(n+2) = Fn + F(n+1)
-pub fn fib(n: usize) -> BigUint {
+pub fn fib(n: u64) -> BigUint {
     if n < 2 {
         return n.into();
     }
@@ -29,8 +29,11 @@ pub fn fib(n: usize) -> BigUint {
 }
 
 /*
-| F(n)   |   | 1  1 |   | F(n-1) |
-| F(n-1) | = | 1  0 | * | F(n-2) |
+| b  a |   | 1  1 |   | a+b  b |
+| 0  0 | * | 1  0 | = | 0    0 |
+
+| F(1)  F(0) |   | 1  1 |   | F(2)[F(0)+F(1)]  F(1) |
+| 0      0   | * | 1  0 | = | 0                 0   |
  */
 pub fn fib_matrix(n: u64) -> BigUint {
     if n < 2 {
@@ -65,7 +68,6 @@ fn matrix_multiply(a: &[[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) -> [[BigUint; 2
             }
         }
     }
-
     res
 }
 
@@ -89,5 +91,6 @@ mod test {
         assert_eq!(fib_matrix(2), 1.try_into().unwrap());
         assert_eq!(fib_matrix(3), 2.try_into().unwrap());
         assert_eq!(fib_matrix(4), 3.try_into().unwrap());
+        assert_eq!(fib_matrix(1_000), fib(1_000));
     }
 }

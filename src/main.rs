@@ -1,13 +1,9 @@
 use fib_number;
 
 fn main() {
-    let number: usize = 1_000_000;
-    // todo: support bigger number.
-    // let number: usize = 1_000_000;
-    // println!("fib_number {number} is : {:?}", fib_number::fib(number));
-    println!("fib_number {number} is : {:?}", fib_number::fib(number));
-    // println!(
-    //     "fib_number {number} is : {:?}",
-    //     fib_number::fib_matrix(number as u64)
-    // );
+    println!("fib_number 1_000 is : {:?}", fib_number::fib(1_000));
+    println!(
+        "fib_number 1_000_000 is : {:?}",
+        fib_number::fib_matrix(1_000_000)
+    );
 }
