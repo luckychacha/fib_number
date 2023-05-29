@@ -46,16 +46,31 @@ pub fn fib_matrix(n: u64) -> BigUint {
     let mut k = n - 1;
     while k > 0 {
         if k % 2 == 1 {
-            result_matrix = matrix_multiply(&result_matrix, &base_matrix);
+            matrix_multiply(&mut result_matrix, &base_matrix);
         }
 
-        base_matrix = matrix_multiply(&base_matrix, &base_matrix);
+        base_multiply(&mut base_matrix);
         k /= 2;
     }
     result_matrix[0][0].clone()
 }
+fn base_multiply(base: &mut [[BigUint; 2]; 2]) {
+    let mut res: [[BigUint; 2]; 2] = [
+        [0_usize.into(), 0_usize.into()],
+        [0_usize.into(), 0_usize.into()],
+    ];
 
-fn matrix_multiply(a: &[[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) -> [[BigUint; 2]; 2] {
+    for i in 0..2 {
+        for j in 0..2 {
+            for k in 0..2 {
+                res[i][j] += base[i][k].clone() * base[k][j].clone();
+            }
+        }
+    }
+    *base = res;
+}
+
+fn matrix_multiply(a: &mut [[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) {
     let mut res: [[BigUint; 2]; 2] = [
         [0_usize.into(), 0_usize.into()],
         [0_usize.into(), 0_usize.into()],
@@ -68,7 +83,7 @@ fn matrix_multiply(a: &[[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) -> [[BigUint; 2
             }
         }
     }
-    res
+    *a = res;
 }
 
 #[cfg(test)]
