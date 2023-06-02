@@ -20,12 +20,6 @@ pub fn fib(n: u64) -> BigUint {
     }
 
     dp_1
-
-    // let mut dp: (BigUint, BigUint) = (Zero::zero(), One::one());
-    // for _ in 2..=n {
-    //     dp = (dp.1.clone(), dp.0.clone() + dp.1.clone())
-    // }
-    // dp.1
 }
 
 /*
@@ -63,7 +57,7 @@ fn base_multiply(base: &mut [[BigUint; 2]; 2]) {
     for i in 0..2 {
         for j in 0..2 {
             for k in 0..2 {
-                res[i][j] += base[i][k].clone() * base[k][j].clone();
+                res[i][j] += &base[i][k] * &base[k][j];
             }
         }
     }
@@ -79,7 +73,7 @@ fn matrix_multiply(a: &mut [[BigUint; 2]; 2], b: &[[BigUint; 2]; 2]) {
     for i in 0..2 {
         for j in 0..2 {
             for k in 0..2 {
-                res[i][j] += a[i][k].clone() * b[k][j].clone();
+                res[i][j] += &a[i][k] * &b[k][j];
             }
         }
     }
